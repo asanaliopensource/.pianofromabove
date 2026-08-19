@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Piano From Above - Web Edition</title>
+    <link rel="stylesheet" href="pfa.css">
+    <!-- Подключаем Tone.js для парсинга MIDI и точного воспроизведения звуков -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://unpkg.com/@tonejs/midi"></script>
+</head>
+<body>
+
+    <div class="pfa-window">
+        <!-- Верхнее меню программы -->
+        <div class="pfa-menubar">
+            <div class="menu-item dropdown">
+                <span>Файл</span>
+                <div class="dropdown-content">
+                    <label for="midi-file-input" class="dropdown-link">Открыть MIDI...</label>
+                    <input type="file" id="midi-file-input" accept=".mid, .midi" style="display: none;">
+                </div>
+            </div>
+            <div class="menu-item">Воспроизведение</div>
+            <div class="menu-item">Вид</div>
+            <div class="menu-item">Справка</div>
+            <div class="window-title-text">Piano From Above [Web Edition]</div>
+        </div>
+
+        <!-- Панель инструментов (Toolbar) -->
+        <div class="pfa-toolbar">
+            <button id="btn-play" class="pfa-btn" title="Старт">▶</button>
+            <button id="btn-pause" class="pfa-btn" title="Пауза">⏸</button>
+            <button id="btn-stop" class="pfa-btn" title="Стоп">⏹</button>
+            <div class="toolbar-separator"></div>
+            <span id="track-info" class="toolbar-label">Файл не выбран. Загрузите .mid файл через меню «Файл»</span>
+        </div>
+
+        <!-- Основная область визуализации (падающие ноты) -->
+        <div class="pfa-canvas-container">
+            <canvas id="pfa-canvas"></canvas>
+            <div id="drop-zone-overlay" class="drop-overlay">
+                <div class="drop-box">
+                    <p>Перетащите .mid файл сюда</p>
+                    <span>или выберите через меню Файл 📂</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Нижняя виртуальная MIDI-клавиатура (88 клавиш) -->
+        <div class="pfa-keyboard-container" id="keyboard-container">
+            <!-- Клавиши генерируются динамически через virtualkeyboard.js -->
+        </div>
+
+        <!-- Статус-бар внизу -->
+        <div class="pfa-statusbar">
+            <span id="status-fps">FPS: 60</span>
+            <span id="status-time">00:00 / 00:00</span>
+            <span id="status-notes">Активных нот: 0</span>
+        </div>
+    </div>
+
+    <!-- Подключаем скрипты в правильном порядке -->
+    <script src="midi/parser.js"></script>
+    <script src="midi/virtualkeyboard.js"></script>
+    <script src="interface/pfa.js"></script>
+</body>
+</html>

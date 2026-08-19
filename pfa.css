@@ -1,0 +1,229 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #555;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    color: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Главное окно приложения */
+.pfa-window {
+    width: 960px;
+    height: 680px;
+    background-color: #f0f0f0;
+    border: 1px solid #003c74;
+    border-top: 3px solid #267fd0;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Верхнее меню */
+.pfa-menubar {
+    background: linear-gradient(to bottom, #fcfcfc 0%, #e0e0e0 100%);
+    border-bottom: 1px solid #aca899;
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    height: 22px;
+}
+
+.menu-item {
+    padding: 2px 6px;
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-item:hover {
+    background-color: #3399ff;
+    color: #fff;
+}
+
+.window-title-text {
+    margin-left: auto;
+    color: #666;
+    font-weight: bold;
+    padding-right: 6px;
+}
+
+/* Выпадающее меню */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 18px;
+    left: 0;
+    background-color: #f0f0f0;
+    border: 1px solid #716f64;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
+    min-width: 130px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 4px 10px;
+    cursor: pointer;
+    color: #000;
+}
+
+.dropdown-link:hover {
+    background-color: #3399ff;
+    color: #fff;
+}
+
+/* Панель инструментов */
+.pfa-toolbar {
+    background: linear-gradient(to bottom, #f4f4f4 0%, #d4d0c8 100%);
+    border-bottom: 1px solid #808080;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    gap: 4px;
+}
+
+.pfa-btn {
+    background: linear-gradient(to bottom, #fff 0%, #e3e3e3 80%, #d8d8d8 100%);
+    border: 1px solid #707070;
+    border-radius: 2px;
+    padding: 3px 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pfa-btn:hover {
+    background: linear-gradient(to bottom, #eaf2ff 0%, #b8d2ff 100%);
+    border-color: #3c7fb1;
+}
+
+.pfa-btn:active {
+    background: linear-gradient(to bottom, #b8d2ff 0%, #90b4ff 100%);
+}
+
+.toolbar-separator {
+    width: 1px;
+    height: 20px;
+    background-color: #a0a0a0;
+    margin: 0 4px;
+}
+
+.toolbar-label {
+    color: #333;
+    font-style: italic;
+    margin-left: 6px;
+}
+
+/* Область Canvas (падающие ноты) */
+.pfa-canvas-container {
+    flex-grow: 1;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #a0a0a0;
+}
+
+#pfa-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Зона Drag & Drop */
+.drop-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s;
+}
+
+.drop-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.drop-box {
+    border: 2px dashed #3399ff;
+    padding: 30px 50px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.drop-box p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #003c74;
+    margin-bottom: 6px;
+}
+
+/* Виртуальная клавиатура */
+.pfa-keyboard-container {
+    height: 110px;
+    background-color: #222;
+    position: relative;
+    border-top: 1px solid #111;
+    display: flex;
+    justify-content: center;
+}
+
+.piano-key {
+    position: absolute;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background 0.05s;
+}
+
+.piano-key.white {
+    width: 11px; /* Расчет на 52 белые клавиши */
+    height: 110px;
+    background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+    border: 1px solid #999;
+    border-radius: 0 0 3px 3px;
+    z-index: 1;
+}
+
+.piano-key.white.active {
+    background: linear-gradient(to bottom, #a0c8ff 0%, #d0e4ff 100%);
+}
+
+.piano-key.black {
+    width: 7px;
+    height: 65px;
+    background: linear-gradient(to bottom, #444 0%, #111 100%);
+    border: 1px solid #000;
+    border-radius: 0 0 2px 2px;
+    z-index: 2;
+}
+
+.piano-key.black.active {
+    background: linear-gradient(to bottom, #2060c0, 0%, #4080ff 100%);
+}
+
+/* Статус-бар */
+.pfa-statusbar {
+    background-color: #f0f0f0;
+    border-top: 1px solid #fff;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    gap: 15px;
+    color: #444;
+}
